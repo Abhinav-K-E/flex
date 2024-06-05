@@ -1,0 +1,124 @@
+Create table employee(EmpID varchar(5) primary key, EName varchar(10), Salary integer, Department varchar(15),Age int); 
+insert into employee values('E001','Fasal',50000,'HR',33);
+insert into employee values('E002','Julie',12000,'purchase',25); 
+insert into employee values('E003','Thanu',33450,'Administrative',29);
+insert into employee values('E004','Jez',12345,'Office',28); 
+insert into employee values('E005','Aryan',51342,'Sales',40); 
+insert into employee values('E006','Meera',48000,'HR',40); 
+select * from employee 
+a) select count(*) from employee 
+b) select ename,age from employee where age in (select max(age) from employee group by department) 
+c) select department,avg(age) from employee group by department; 
+d) select department, avg(salary) from employee group by department
+e) select min(salary) from employee 
+f) select count(*) from employee where department ='purchase' 
+g) select max(salary) from employee where department='Sales' 
+h) select max(salary)-min(salary) from employee
+
+output
+
+
+SQL> Create table employee(EmpID varchar(5) primary key, EName varchar(10), Salary integer, Department varchar(15),Age int);
+
+Table created.
+
+SQL> insert into employee values('E001','Fasal',50000,'HR',33);
+
+1 row created.
+
+SQL>  insert into employee values('E002','Julie',12000,'purchase',25);
+
+1 row created.
+
+SQL> insert into employee values('E003','Thanu',33450,'Administrative',29);
+
+1 row created.
+
+SQL> insert into employee values('E004','Jez',12345,'Office',28);
+
+1 row created.
+
+SQL> insert into employee values('E005','Aryan',51342,'Sales',40);
+
+1 row created.
+
+SQL> insert into employee values('E006','Meera',48000,'HR',40);
+
+1 row created.
+
+SQL> select * from employee
+  2  ;
+
+EMPID ENAME          SALARY DEPARTMENT             AGE
+----- ---------- ---------- --------------- ----------
+E001  Fasal           50000 HR                      33
+E002  Julie           12000 purchase                25
+E003  Thanu           33450 Administrative          29
+E004  Jez             12345 Office                  28
+E005  Aryan           51342 Sales                   40
+E006  Meera           48000 HR                      40
+
+6 rows selected.
+
+SQL> select count(*) from employee
+  2  ;
+
+  COUNT(*)
+----------
+         6
+
+SQL> select ename,age from employee where age in (select max(age) from employee group by department);
+
+ENAME             AGE
+---------- ----------
+Julie              25
+Thanu              29
+Jez                28
+Aryan              40
+Meera              40
+
+SQL> select department,avg(age) from employee group by department;
+
+DEPARTMENT        AVG(AGE)
+--------------- ----------
+purchase                25
+Administrative          29
+HR                    36.5
+Office                  28
+Sales                   40
+
+SQL> select department, avg(salary) from employee group by department;
+
+DEPARTMENT      AVG(SALARY)
+--------------- -----------
+purchase              12000
+Administrative        33450
+HR                    49000
+Office                12345
+Sales                 51342
+
+SQL> select min(salary) from employee ;
+
+MIN(SALARY)
+-----------
+      12000
+
+SQL> select count(*) from employee where department ='purchase' ;
+
+  COUNT(*)
+----------
+         1
+
+SQL> select max(salary) from employee where department='Sales' ;
+
+MAX(SALARY)
+-----------
+      51342
+
+SQL> select max(salary)-min(salary) from employee;
+
+MAX(SALARY)-MIN(SALARY)
+-----------------------
+                  39342
+
+SQL>

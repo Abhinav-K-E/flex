@@ -1,0 +1,118 @@
+create table employ(ename varchar(20) primary key,city varchar(20));
+insert into employ values('anu','calicut');
+insert into employ values('anup','calicut');
+insert into employ values('anusree','tvm');
+insert into employ values('anupriya','kochi');
+insert into employ values('anoop','trissur');
+insert into employ values('anuvinda','kochi');
+insert into employ values('appu','kochi');
+select * from employ;
+create table cmpny(cname varchar(20) primary key,city varchar(20));
+insert into cmpny values('infosis','calicut');
+insert into cmpny values('IBM','kochi');
+insert into cmpny values('wipro','tvm');
+select * from cmpny;
+create table manages(ename varchar(20) references employ(ename),mname varchar(20));
+insert into manages values('anu','anu');
+insert into manages values('anup','anu');
+insert into manages values('anusree','anoop');
+insert into manages values('anupriya','anoop');
+insert into manages values('anoop','anoop');
+insert into manages values('anuvinda','anoop');
+create table works(ename varchar(20) references employ(ename),cname varchar(20) references 
+cmpny(cname),salary int);
+insert into works values('anu','infosis',25000);
+insert into works values('anup','infosis',9000);
+insert into works values('anusree','wipro',30000);
+insert into works values('anupriya','wipro',10000);
+insert into works values('anoop','wipro',22000);
+insert into works values('anuvinda','wipro',25000);
+insert into works values('appu','IBM',25000);
+select * from works;
+A) select ename from works where COMPANY_NAME='infosis';
+B)select employ.ename,employ.city from employ,works where employ.ename=works.EMPLOYEE_NAME and works.COMPANY_NAME='wipro';
+C)select employ.ename,employ.city from employ,works where employ.ename=works.EMPLOYEE_NAME and works.COMPANY_NAME='infosis' and works.salary>10000;
+D)select employ.ename from employ,cmpny,works where employ.city=cmpny.city and employ.ename=works.EMPLOYEE_NAME and works.COMPANY_NAME=cmpny.cname;
+E)select ename from employ where ename not in(select EMPLOYEE_NAME from works where COMPANY_NAME='wipro');
+F)create view emplcount as select COMPANY_NAME,count(COMPANY_NAME)as count from works group by COMPANY_NAME; 
+select cname from emplcount where count in(select max(count) from emplcount);
+
+output
+
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon Jun 19 13:27:03 2023
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> select ename from works where COMPANY_NAME='infosis';
+select ename from works where COMPANY_NAME='infosis'
+       *
+ERROR at line 1:
+ORA-00904: "ENAME": invalid identifier
+
+
+SQL> select EMPLOYEE_NAME from works where COMPANY_NAME='infosis';
+
+EMPLOYEE_N
+----------
+anu
+anup
+
+SQL> select employ.ename,employ.city from employ,works where employ.ename=works.EMPLOYEE_NAME and works.COMPANY_NAME='wipro';
+
+ENAME                CITY
+-------------------- --------------------
+anusree              tvm
+anupriya             kochi
+anoop                trissur
+anuvinda             kochi
+
+SQL> select employ.ename,employ.city from employ,works where employ.ename=works.EMPLOYEE_NAME and works.COMPANY_NAME='infosis' and works.salary>10000;
+
+ENAME                CITY
+-------------------- --------------------
+anu                  calicut
+
+SQL> select employ.ename from employ,cmpny,works where employ.city=cmpny.city and employ.ename=works.EMPLOYEE_NAME and works.COMPANY_NAME=cmpny.cname;
+
+ENAME
+--------------------
+anu
+anup
+anusree
+appu
+
+SQL> select ename from employ where ename not in(select EMPLOYEE_NAME from works where COMPANY_NAME='wipro');
+
+ENAME
+--------------------
+appu
+anup
+anu
+
+SQL> create view emplcount as select COMPANY_NAME,count(COMPANY_NAME)as count from works group by COMPANY_NAME;
+create view emplcount as select COMPANY_NAME,count(COMPANY_NAME)as count from works group by COMPANY_NAME
+            *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> select cname from emplcount where count in(select max(count) from emplcount);
+select cname from emplcount where count in(select max(count) from emplcount)
+       *
+ERROR at line 1:
+ORA-00904: "CNAME": invalid identifier
+
+
+SQL> select COMPANY_NAME from emplcount where count in(select max(count) from emplcount);
+
+COMPANY_NA
+----------
+wipro

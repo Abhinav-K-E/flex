@@ -1,0 +1,152 @@
+Create table customer(cust_no varchar(5), cust_name varchar(15), age int, phone varchar(10) ); 
+a)insert into customer values('c001','Raju',21,'9878675645'); 
+insert into customer values('c002','Rajina',32,'2356781221'); 
+ insert into customer values('c003','Theertha',22,'8745987456'); 
+ insert into customer values('c004','James',28,'8521456986'); 
+ insert into customer values('c005','Sana',12,'9632589632'); 
+ select * from customer
+ b)alter table customer add customer d_birth date; 
+ c)create table cust_phone as select cust_name, phone from customer; 
+ d)alter table customer drop column age; 
+ e)alter table customer modify cust_name type varchar(25); 
+ f)delete from customer; 
+ g)alter table customer rename to cust 
+ h)drop table cust;
+
+output;
+
+SQL> Create table customer(cust_no varchar(5), cust_name varchar(15), age int, phone varchar(10) );
+
+Table created.
+
+SQL> insert into customer values('c001','Raju',21,'9878675645');
+
+1 row created.
+
+SQL> insert into customer values('c002','Rajina',32,'2356781221');
+
+1 row created.
+
+SQL> insert into customer values('c003','Theertha',22,'8745987456');
+
+1 row created.
+
+SQL> insert into customer values('c004','James',28,'8521456986');
+
+1 row created.
+
+SQL>  insert into customer values('c005','Sana',12,'9632589632');
+
+1 row created.
+
+SQL> select * from customer;
+
+CUST_ CUST_NAME              AGE PHONE
+----- --------------- ---------- ----------
+c001  Raju                    21 9878675645
+c002  Rajina                  32 2356781221
+c003  Theertha                22 8745987456
+c004  James                   28 8521456986
+c005  Sana                    12 9632589632
+
+SQL> alter table customer add column d_birth date;
+alter table customer add column d_birth date
+                         *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> alter table customer add customer d_birth date;
+alter table customer add customer d_birth date
+                                          *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table customer add d_birth date;
+
+Table altered.
+
+SQL> create table cust_phone as select cust_name, phone from customer;
+
+Table created.
+
+SQL> alter table customer drop column age;
+
+Table altered.
+
+SQL> alter table customer alter column cust_name type varchar(25);
+alter table customer alter column cust_name type varchar(25)
+                     *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table customer modify cust_name type varchar(25);
+alter table customer modify cust_name type varchar(25)
+                                           *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> select * from customer;
+
+CUST_ CUST_NAME       PHONE      D_BIRTH
+----- --------------- ---------- ---------
+c001  Raju            9878675645
+c002  Rajina          2356781221
+c003  Theertha        8745987456
+c004  James           8521456986
+c005  Sana            9632589632
+
+SQL> alter table customer modify cust_name,varchar(25);
+alter table customer modify cust_name,varchar(25)
+                                     *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table customer modify cust_name;
+
+Table altered.
+
+SQL> select * from customer;
+
+CUST_ CUST_NAME       PHONE      D_BIRTH
+----- --------------- ---------- ---------
+c001  Raju            9878675645
+c002  Rajina          2356781221
+c003  Theertha        8745987456
+c004  James           8521456986
+c005  Sana            9632589632
+
+SQL> alter table customer modify cust_name varchar(25);
+
+Table altered.
+
+SQL> select * from customer;
+
+CUST_ CUST_NAME                 PHONE      D_BIRTH
+----- ------------------------- ---------- ---------
+c001  Raju                      9878675645
+c002  Rajina                    2356781221
+c003  Theertha                  8745987456
+c004  James                     8521456986
+c005  Sana                      9632589632
+
+SQL> delete from customer;
+
+5 rows deleted.
+
+SQL> alter table customer rename to cust ;
+
+Table altered.
+
+SQL> drop table cust;
+
+Table dropped.
+
+
+
+SQL>
+

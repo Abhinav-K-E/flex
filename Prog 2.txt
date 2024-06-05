@@ -1,0 +1,46 @@
+
+
+
+ 
+create table salesman(salesno varchar(10) primary key,sname varchar(20) not null, place varchar(20),phone varchar(10) unique);
+
+
+create table salesorder(ono varchar(10) primary key,odate date not null,salesno varchar(10) constraint fk references salesman(salesno),deltype varchar(1)
+ constraint chk1 check(deltype in ('p','f')),orderstatus varchar(10) constraint chk2 check(orderstatus in ('inprocess','fullfilled','cancelled','backorder')));
+
+
+
+
+insert into salesman values('201','ravi','calicut','1111111111');
+
+insert into salesorder values('2000','01-jan-21','201','p','backorder');
+
+alter table salesorder drop constraint fk;
+
+Table altered.
+
+alter table salesman drop primary key;
+
+Table altered.
+
+alter table salesorder drop constraint chk1;
+
+Table altered.
+
+SQL> alter table salesorder drop constraint chk2;
+
+Table altered.
+
+SQL> alter table salesman add constraint pk primary key(salesno);
+
+Table altered.
+alter table salesorder add constraint fk foreign key(salesno) references salesman(salesno);
+
+Table altered.
+SQL> alter table salesorder add constraint chk1 check(deltype in ('p','f'));
+
+Table altered.
+
+SQL> alter table salesorder add constraint chk2 check(orderstatus in ('inprocess','backorder','fullfilled','cancelled'));
+
+Table altered.
